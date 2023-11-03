@@ -1,0 +1,95 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CommandeController!{% endblock %}
+
+{% block body %}
+
+<div class="container">
+ <div class="row">
+<div class="col-6">
+<h1>Vérifier la commande</h1>
+<h3 class="fs-base fw-nomal text-body text-uppercase pb-1 pb-sm-1">1.<span
+        class="text-decoration-underline ms-1">Les détails d'expédition</span>
+</h3>
+<div class="form-check mb-4">
+<input class="form-check-input" type="radio" name="shipping" checked>
+    <label class="form-check-label d-flex justify-content-between"><span>
+        <span class="d-block fs-base text-dark fw-medium mb-1">{{transporteur.TraNom}}</span>
+        <span class="text-body">{{transporteur.TraDescription}}</span></span>
+        <span class="fs-base text-dark fw-semiblod">{{transporteur.TraPrix}} €</span>
+    </label>
+</div>
+<h3 class="fs-base fw-normal text-body text-uppercase pb-2 pb-sm-3">2.<span
+        class="text-decoration-underline ms-1">Adresse de livraison</span></h3>
+<div class="form-check mb-4">
+    <input class="form-check-input" type="radio" checked>
+    <label class="form-check-label d-flex justifi-content-between">
+        <span class="d-block fs-base text dark fw-medium mb-1">{{adresseLivraison|replace({'[-br]' : '<br>'})|raw}} </span></h3>
+    </label>
+</div>
+</div>
+<div class ="col-6">
+ <section class="row">
+            <div class="col-12">
+                <h1>Panier </h1>             
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Produit</th>
+                            <th>Prix</th>
+                            <th>Quantité</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for element in data %}
+                            <tr>
+                                <td>{{ element.produit.ProNom }}</td>
+                                <td>{{ element.produit.ProPrix|number_format(2, '.', ',')}}€</td>
+                                <td>{{ element.quantite }}</td>
+                                <td>{{ element.quantite * element.produit.ProPrix}} €</td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="5">Votre panier est vide</td>
+                            </tr>    
+                        {% endfor %}
+                        </tbody> 
+                        <tfoot>
+                        <tr>
+                            <td colspan="2">Sous-Total</td>
+                            <td>{{totalQte}}</td>
+                            <td>{{ sousTotal}} €</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">Frais de port</td>
+                            <td>{{ fdp}} €</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">Total</td>
+                            <td>{{total}} €</td>
+                        </tr>
+                    </tfoot>
+                </table>
+                </div>
+</div>
+{% if moyenPaiement == 'stripe' %}
+
+    <form method="POST" action="{{ path('payment_stripe', {id: id}) }}">
+        <button class="btn btn-lg btn-primary" type="submit"
+        style="border-radius: 6px; position: relative; top:20px;">Payer par stripe
+        | {{total}} €
+        </button>
+    </form>
+{% else %}
+
+    <form method="POST" action="#">
+        <button class="btn btn-lg btn-primary" type="submit"
+        style="border-radius: 6px; position: relative; top:20px;">Payer par paypal
+        | {{total}} €
+        </button>
+    </form>
+
+{% endif %}
+</div>
+{% endblock %}

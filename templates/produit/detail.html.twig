@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello detailController!{% endblock %}
+
+{% block body %}
+ <style>
+         .miniature{
+            height:50px;
+         }   
+         .exempleSonore{
+            height:100px;
+         }
+         .forSticky{
+            height:100rem;
+         }
+        </style>
+
+<div class="container">
+<div class="row">
+
+
+<div class="col-8">
+<div class="container">
+<div class="row">
+<div class="fs-1">
+{{ pro.proNom }}
+</div> 
+
+<img src="/images/{{ pro.proImage }} " class="imgdetail mx-auto "> 
+<div class="bg-secondary mb2 miniature">Miniature</div>
+<div class="bg-secondary exempleSonore">Exemple sonore</div>
+{# <ul> #}
+{% for desc in description %}
+{# <li>{{desc}}</li>  #}
+<p>{{desc}}</p>
+{% endfor %}
+{# {{pro.proDescription}} #}
+{# </ul> #}
+</div>
+</div>
+</div>
+
+<div class="col-4 bg-secondary forSticky">
+
+<div class="fs-1 sticky-sm-top">
+{{ pro.proPrix}}€
+{# {{ pro.proPrix|number_format(2, '.', ',')}}€ #}
+   {# <a href="/add/{{Produit.id}}" class="btn btn-success">Ajouter au panier</a> #}
+<a href="{{ path('panier_add', {id: pro.Id}) }}" class="btn btn-success">Ajouter au panier</a>
+</div> 
+
+
+
+</div>
+
+
+
+
+ </div>
+</div> 
+{% endblock %}

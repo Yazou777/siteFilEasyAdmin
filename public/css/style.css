@@ -1,0 +1,13 @@
+
+
+.imageCategorie {
+    width:20rem;
+    height: 20rem;
+}
+
+@media (max-width: 990px) {
+    .imageCategorie {
+        width:15rem;
+        height: 15rem;
+    }
+}

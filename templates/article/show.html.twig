@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Produit{% endblock %}
+
+{% block body %}
+    <h1>Produit</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ produit.id }}</td>
+            </tr>
+            <tr>
+                <th>Pro_nom</th>
+                <td>{{ produit.proNom }}</td>
+            </tr>
+            <tr>
+                <th>Pro_prix</th>
+                <td>{{ produit.proPrix }}</td>
+            </tr>
+            <tr>
+                <th>Pro_image</th>
+                <td>{{ produit.proImage }}</td>
+            </tr>
+            <tr>
+                <th>Pro_description</th>
+                <td>{{ produit.proDescription }}</td>
+            </tr>
+            <tr>
+                <th>Pro_stkphy</th>
+                <td>{{ produit.proStkphy }}</td>
+            </tr>
+            <tr>
+                <th>Pro_stkale</th>
+                <td>{{ produit.proStkale }}</td>
+            </tr>
+            <tr>
+                <img style="max-width: 500px;" src="{{ vich_uploader_asset(produit, 'imageFile') }}">
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_article_index') }}">back to list</a>
+
+    <a href="{{ path('app_article_edit', {'id': produit.id}) }}">edit</a>
+
+    {{ include('article/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Sous Categories{% endblock %}
+
+{% block body %}
+<h1 class="text-center my-5"> Nos Catégories </h1>
+
+<div class="container">
+    <div class="row ">
+{% for f in findby %}
+
+        <div class="col-12 col-sm-12 col-md-6 col-lg-4 text-center my-5 " >
+       
+            <a href="/produit/{{ f.catnom }}">
+             <div>{{ f.catnom }}</div>
+                <img alt="{{ f.catnom }} image non disponible" class="imageCategorie"src="/images/{{ f.catimage }}"> 
+             
+                </img>
+            </a>
+        </div>
+{% endfor %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}produit
+{% endblock %}
+
+{% block body %}
+	<h1 class="text-center my-5">
+		{{catParentName}}
+		nombre de produits :
+		{% for p in nbProduit %}
+			{{p.1}}
+		{% endfor %}
+	</h1>
+
+	<div class="container">
+	    <div class="row ">
+	{% for f in findby %}
+  
+		<div class="card mb-3 " style="max-width: 1080px;">
+			<a href="/detail_produit/{{ f.pronom }}">
+				<div class="row g-0">
+					<div class="col-md-4">
+						<img src="/images/{{ f.proimage }}" class="img-fluid rounded-start" alt="...">
+					</div>
+					<div class="col-md-8">
+
+						<div class="card-body">
+
+							<div class="container">
+								<div class="row">
+									<h5 class="card-title  col-10">{{ f.pronom }}</h5>
+									{# <div class="col-2">{{f.proprix|number_format(2, '.', ',')}}€ #}
+									<div class="col-2">{{f.proprix}}€
+									</div>
+									<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+									<div class="card-text"></div>
+									<p class="card-text">
+										<small class="text-muted">Last updated 3 mins ago</small>
+									</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		{% endfor %}
+		</div>
+		</div>
+	</a>
+</div>{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AccueilController!{% endblock %}
+
+{% block body %}
+
+{% if app.user %}
+<div>Bonjour {{app.user.getUtiNom}} {{app.user.getUtiPrenom}} </div>
+<div>numero id : {{app.user.getId}}</div>
+{% endif %}
+{% if is_granted('ROLE_ADMIN') %}
+TU ES ADMIN !!!!
+{% endif %}
+{% if is_granted('ROLE_COMMERCIAL') %}
+TU ES COMMERCIAL !!!!
+{% endif %}
+<h1 class="text-center my-5"> Nos Catégories </h1>
+
+<div class="container">
+    <div class="row ">
+{% for f in findby %}
+        <div class="col-12 col-sm-12 col-md-6 col-lg-4 text-center my-5 " >
+            <a href="/accueil/{{ f.catnom }}">
+                <img class="imageCategorie" src="/images/{{ f.catimage }}"> 
+                </img>
+            </a>
+        </div>
+{% endfor %}
+    </div>
+</div>
+
+{% endblock %}

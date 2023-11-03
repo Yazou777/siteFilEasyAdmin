@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Transporteur index{% endblock %}
+
+{% block body %}
+    <h1>Transporteur index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Tra_nom</th>
+                <th>Tra_description</th>
+                <th>Tra_prix</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for transporteur in transporteurs %}
+            <tr>
+                <td>{{ transporteur.id }}</td>
+                <td>{{ transporteur.traNom }}</td>
+                <td>{{ transporteur.traDescription }}</td>
+                <td>{{ transporteur.traPrix }}</td>
+                <td>
+                    <a href="{{ path('app_transporteur_show', {'id': transporteur.id}) }}">show</a>
+                    <a href="{{ path('app_transporteur_edit', {'id': transporteur.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_transporteur_new') }}">Create new</a>
+{% endblock %}
