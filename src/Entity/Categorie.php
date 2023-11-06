@@ -33,10 +33,10 @@ class Categorie
         $this->produits = new ArrayCollection();
     }
 
-    // public function __toString(): string
-    // {
-    //     return $this->cat_nom;
-    // }
+    public function __toString(): string
+    {
+        return $this->cat_nom;
+    }
 
     public function getId(): ?int
     {
