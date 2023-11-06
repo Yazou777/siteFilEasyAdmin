@@ -31,7 +31,7 @@ class PaymentController extends AbstractController
         $productStripe = [];
         //recupére la commande en cours
       $order = $this->em->getRepository(Commande::class)->findOneBy(['id' => $id]);
-    // dd($order);
+     //dd($order);
      //si commande introuvable ou n'existe pas
      if(!$order){
         return $this->redirectToRoute('panier_index');

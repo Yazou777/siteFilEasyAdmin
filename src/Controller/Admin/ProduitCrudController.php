@@ -13,6 +13,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class ProduitCrudController extends AbstractCrudController
@@ -31,7 +32,8 @@ class ProduitCrudController extends AbstractCrudController
             // TextField::new('title'),
             // TextEditorField::new('description'),
             TextField::new('pro_nom'),
-            MoneyField::new('pro_prix')->setCurrency('EUR'),
+            //MoneyField::new('pro_prix')->setCurrency('EUR'),
+            NumberField::new('pro_prix')->setNumDecimals(2),
             TextField::new('imageFile')->setFormType(VichImageType::class),
             ImageField::new('pro_image')->setBasePath('/images')->onlyOnIndex(),
                // ->setFormType(VichImageType::class)

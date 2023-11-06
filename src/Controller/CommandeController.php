@@ -65,10 +65,6 @@ class CommandeController extends AbstractController
         return $this->render('commande/index.html.twig',compact('data','total','totalQte','form'));
     }
 
-
-
-
-
     #[Route('/ajout', name: 'add', methods: ['POST'])]
     public function add(SessionInterface $session, ProduitRepository $produitRepository, EntityManagerInterface $em, Request $request): Response
     {
