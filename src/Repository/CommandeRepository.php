@@ -21,6 +21,32 @@ class CommandeRepository extends ServiceEntityRepository
         parent::__construct($registry, Commande::class);
     }
 
+public function myCommande(): array
+{
+    // automatically knows to select Products
+    // the "p" is an alias you'll use in the rest of the query
+    $qb = $this->createQueryBuilder('c')
+        ->select('c.id as c_id, u.id as user_id, u.email, produit.id as p_id, produit.pro_nom as p_nom, panier.pan_prix_unite as p_prix, panier.pan_quantite as p_quantite')
+        ->join('c.com_uti', 'u')
+        ->join('c.paniers', 'panier')
+        ->join('panier.pan_pro', 'produit')
+        ->where('u.id = :comUtiId')
+        ->setParameter('comUtiId', 1);
+       // ->orderBy('p.price', 'ASC');
+
+    // if (!$includeUnavailableProducts) {
+    //     $qb->andWhere('p.available = TRUE');
+    // }
+
+    $query = $qb->getQuery();
+
+    return $query->execute();
+    // return $query->getResult();
+
+    // to get just one result:
+    // $product = $query->setMaxResults(1)->getOneOrNullResult();
+}
+
 //    /**
 //     * @return Commande[] Returns an array of Commande objects
 //     */

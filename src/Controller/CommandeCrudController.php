@@ -2,20 +2,24 @@
 
 namespace App\Controller;
 
-use App\Entity\Commande;
 use App\Entity\Panier;
+use App\Entity\Commande;
 use App\Form\Commande1Type;
-use App\Repository\CommandeRepository;
 use App\Repository\PanierRepository;
+use App\Repository\CommandeRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\ExpressionLanguage\Expression;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/commande/crud')]
+
 class CommandeCrudController extends AbstractController
 {
+    #[IsGranted('ROLE_ADMIN')]
     #[Route('/', name: 'app_commande_crud_index', methods: ['GET'])]
     public function index(CommandeRepository $commandeRepository): Response
     {
@@ -28,7 +32,9 @@ class CommandeCrudController extends AbstractController
     public function monIndex(CommandeRepository $commandeRepository,PanierRepository $panierRepository): Response
     {
         $x = $commandeRepository->findBy(['com_uti' => $this->getUser()]);
-        dd($x[2]->getId());
+        $y = $commandeRepository->myCommande();
+        dd($y);
+       // dd($x[2]->getId());
         return $this->render('commande_crud/index.html.twig', [
             'commandes' => $commandeRepository->findBy(['com_uti' => $this->getUser()]),
             //'paniers' => $panierRepository->findBy(['pan_com' => ])
