@@ -19,7 +19,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class CommandeCrudController extends AbstractController
 {
-    #[IsGranted('ROLE_ADMIN')]
+   // #[IsGranted('ROLE_ADMIN')]
     #[Route('/', name: 'app_commande_crud_index', methods: ['GET'])]
     public function index(CommandeRepository $commandeRepository): Response
     {
@@ -31,13 +31,29 @@ class CommandeCrudController extends AbstractController
     #[Route('/mesCommande', name: 'app_commande_mon_index', methods: ['GET'])]
     public function monIndex(CommandeRepository $commandeRepository,PanierRepository $panierRepository): Response
     {
-        $x = $commandeRepository->findBy(['com_uti' => $this->getUser()]);
-        $y = $commandeRepository->myCommande();
-        dd($y);
+        // $x = $commandeRepository->findBy(['com_uti' => $this->getUser()]);
+        //  $y = $commandeRepository->myCommandeByCom();
+        //  dd($y);
        // dd($x[2]->getId());
-        return $this->render('commande_crud/index.html.twig', [
+        return $this->render('commande_crud/my_commande.html.twig', [
             'commandes' => $commandeRepository->findBy(['com_uti' => $this->getUser()]),
+            //'myCommandes' => $commandeRepository->myCommande(),
             //'paniers' => $panierRepository->findBy(['pan_com' => ])
+        ]);
+    }
+
+    #[Route('/mesCommande/{id}', name: 'app_my_commande_crud_show', methods: ['GET'])]
+    public function showDetailCommande(Commande $commande, CommandeRepository $commandeRepository, $id): Response
+    {
+          // $y = $commandeRepository->myCommandeByCom($id);
+        //    $y = $commandeRepository->totalPrixCom($id);
+        //    dd($y);
+        // $t = $commandeRepository->myCommande();
+        // dd($t);
+        return $this->render('commande_crud/show_my_commande.html.twig', [
+            //'commande' => $commande,
+            'commandes' => $commandeRepository->myCommandeByCom($id),
+            'totals' => $commandeRepository->totalPrixCom($id)
         ]);
     }
 
@@ -62,10 +78,11 @@ class CommandeCrudController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_commande_crud_show', methods: ['GET'])]
-    public function show(Commande $commande): Response
+    public function show(Commande $commande, CommandeRepository $commandeRepository): Response
     {
         return $this->render('commande_crud/show.html.twig', [
             'commande' => $commande,
+            'commandes' => $commandeRepository->myCommande()
         ]);
     }
 

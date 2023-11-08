@@ -44,6 +44,13 @@
                 <td>{{ commande.comPaypalId }}</td>
             </tr>
         </tbody>
+         {% for commande in commandes %}
+          <tr>
+          <td>{{ commande.p_nom }}</td>
+                <td>{{ commande.p_prix }}</td>
+                <td>{{ commande.p_quantite }}</td>
+                </tr>
+                  {% endfor %}
     </table>
 
     <a href="{{ path('app_commande_crud_index') }}">back to list</a>

@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Commande index{% endblock %}
+
+{% block body %}
+    <h1>Commande index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Com_date</th>
+                <th>Com_commentaire</th>
+                <th>Com_adresse_livraison</th>
+                <th>Com_adresse_facturation</th>
+                <th>Com_isPaid</th>
+                <th>Com_moyen_paiement</th>
+                <th>Com_stripe_session_id</th>
+                <th>Com_paypal_id</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for commande in commandes %}
+            <tr>
+              <td>{{ commande.id }}</td>
+                <td>{{ commande.comDate ? commande.comDate|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ commande.comCommentaire }}</td>
+                <td>{{ commande.comAdresseLivraison }}</td>
+                <td>{{ commande.comAdresseFacturation }}</td>
+                <td>{{ commande.comIsPaid ? 'Yes' : 'No' }}</td>
+                <td>{{ commande.comMoyenPaiement }}</td>
+                <td>{{ commande.comStripeSessionId }}</td>
+                <td>{{ commande.comPaypalId }}</td>
+                <td>     
+                <a href="{{ path('app_my_commande_crud_show', {'id': commande.id}) }}">show</a>
+                {# <a href="{{ path('app_my_commande_crud_show',{'id':  app.user.id  }) }}>show</a> #}
+                    {# <a href="{{ path('app_commande_crud_edit', {'id': commande.id}) }}">edit</a> #}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="10">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {# <a href="{{ path('app_commande_crud_new') }}">Create new</a> #}
+{% endblock %}

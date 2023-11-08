@@ -41,7 +41,60 @@ public function myCommande(): array
     $query = $qb->getQuery();
 
     return $query->execute();
-    // return $query->getResult();
+    //return $query->getResult();
+
+    // to get just one result:
+    // $product = $query->setMaxResults(1)->getOneOrNullResult();
+}
+
+public function myCommandeByCom($id): array
+{
+    // automatically knows to select Products
+    // the "p" is an alias you'll use in the rest of the query
+    $qb = $this->createQueryBuilder('c')
+        ->select('c.id as c_id, u.id as user_id, u.email, produit.id as p_id, produit.pro_nom as p_nom, panier.pan_prix_unite as p_prix, panier.pan_quantite as p_quantite, panier.pan_prix_unite * panier.pan_quantite as p_SousTotal' )
+        ->join('c.com_uti', 'u')
+        ->join('c.paniers', 'panier')
+        ->join('panier.pan_pro', 'produit')
+        ->where('c.id = :comId')
+        ->setParameter('comId', $id);
+       // ->orderBy('p.price', 'ASC');
+
+    // if (!$includeUnavailableProducts) {
+    //     $qb->andWhere('p.available = TRUE');
+    // }
+
+    $query = $qb->getQuery();
+
+    return $query->execute();
+    //return $query->getResult();
+
+    // to get just one result:
+    // $product = $query->setMaxResults(1)->getOneOrNullResult();
+}
+
+public function totalPrixCom($id): array
+{
+    // automatically knows to select Products
+    // the "p" is an alias you'll use in the rest of the query
+    $qb = $this->createQueryBuilder('c')
+        ->select('t.tra_nom as p_tra,t.tra_prix as p_fdp, SUM(panier.pan_prix_unite * panier.pan_quantite) + t.tra_prix as p_total' )
+        ->join('c.com_uti', 'u')
+        ->join('c.com_transporteur', 't')
+        ->join('c.paniers', 'panier')
+        ->join('panier.pan_pro', 'produit')
+        ->where('c.id = :comId')
+        ->setParameter('comId', $id);
+       // ->orderBy('p.price', 'ASC');
+
+    // if (!$includeUnavailableProducts) {
+    //     $qb->andWhere('p.available = TRUE');
+    // }
+
+    $query = $qb->getQuery();
+
+    return $query->execute();
+    //return $query->getResult();
 
     // to get just one result:
     // $product = $query->setMaxResults(1)->getOneOrNullResult();
