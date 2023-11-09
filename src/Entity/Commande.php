@@ -55,6 +55,9 @@ class Commande
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $com_paypal_id = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $com_facture_id = null;
+
     public function __construct()
     {
         $this->com_date = new \DateTimeImmutable();
@@ -251,6 +254,18 @@ class Commande
     public function setComPaypalId(?string $com_paypal_id): static
     {
         $this->com_paypal_id = $com_paypal_id;
+
+        return $this;
+    }
+
+    public function getComFactureId(): ?int
+    {
+        return $this->com_facture_id;
+    }
+
+    public function setComFactureId(?int $com_facture_id): static
+    {
+        $this->com_facture_id = $com_facture_id;
 
         return $this;
     }

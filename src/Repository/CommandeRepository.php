@@ -52,7 +52,7 @@ public function myCommandeByCom($id): array
     // automatically knows to select Products
     // the "p" is an alias you'll use in the rest of the query
     $qb = $this->createQueryBuilder('c')
-        ->select('c.id as c_id, u.id as user_id, u.email, produit.id as p_id, produit.pro_nom as p_nom, panier.pan_prix_unite as p_prix, panier.pan_quantite as p_quantite, panier.pan_prix_unite * panier.pan_quantite as p_SousTotal' )
+        ->select('c.id as c_id, u.id as user_id, u.email as user_email, u.uti_telephone as user_tel, produit.id as p_id, produit.pro_nom as p_nom, panier.pan_prix_unite as p_prix, panier.pan_quantite as p_quantite, panier.pan_prix_unite * panier.pan_quantite as p_SousTotal, c.com_adresse_facturation as c_adFac, c.com_adresse_livraison as c_adLiv, c.com_date as c_date' )
         ->join('c.com_uti', 'u')
         ->join('c.paniers', 'panier')
         ->join('panier.pan_pro', 'produit')

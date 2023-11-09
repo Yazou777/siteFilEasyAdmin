@@ -12,6 +12,12 @@
                 <th>Prix en Euro</th>
                 <th>Quantité</th>
                 <th>SousTotal</th>
+                 <th>Adresse</th>
+                <th>Adresse de facturation</th>
+                <th>Numero client</th>
+                <th>Email</th>
+                <th>Telephone</th>
+                <th>Date commande</th>
                {#  <th>Com_adresse_facturation</th>
                 <th>Com_isPaid</th>
                 <th>Com_moyen_paiement</th>
@@ -24,10 +30,16 @@
         {% for commande in commandes %}
             <tr>
               <td>{{ commande.p_nom }}</td>
-                {# <td>{{ commande.comDate ? commande.comDate|date('Y-m-d H:i:s') : '' }}</td> #}
                 <td>{{ commande.p_prix }}</td>
                 <td>{{ commande.p_quantite }}</td>
                 <td>{{ commande.p_SousTotal }}</td>
+                <td>{{ commande.c_adLiv }}</td>
+                <td>{{ commande.c_adFac }}</td>
+                <td>{{ commande.user_id }}</td>
+                <td>{{ commande.user_email }}</td>
+                <td>{{ commande.user_tel }}</td>
+                 <td>{{ commande.c_date ? commande.c_date|date('Y-m-d') : '' }}</td>
+                  {# <td>{{ commande.c_date ? commande.c_date|date('Y-m-d H:i:s') : '' }}</td> #}
                 {# <td>{{ commande.p_SousTotal }}</td> #}
                 {# <td>{{ commande.comAdresseFacturation }}</td>
                 <td>{{ commande.comIsPaid ? 'Yes' : 'No' }}</td>
