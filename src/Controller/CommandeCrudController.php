@@ -45,13 +45,21 @@ class CommandeCrudController extends AbstractController
     #[Route('/mesCommande/{id}', name: 'app_my_commande_crud_show', methods: ['GET'])]
     public function showDetailCommande(Commande $commande, CommandeRepository $commandeRepository, $id): Response
     {
+        $comId = $commandeRepository->findOneBy(['com_facture_id' => $id])->getId();
+        $facId = $commandeRepository->findOneBy(['com_facture_id' => $id])->getComFactureId();
+        $comDate = $commandeRepository->findOneBy(['com_facture_id' => $id])->getComDate();
+        $facDate = $commandeRepository->findOneBy(['com_facture_id' => $id])->getComDate();
           // $y = $commandeRepository->myCommandeByCom($id);
         //    $y = $commandeRepository->totalPrixCom($id);
-        //    dd($y);
+            //dd($comDate);
         // $t = $commandeRepository->myCommande();
         // dd($t);
         return $this->render('commande_crud/show_my_commande.html.twig', [
             //'commande' => $commande,
+            'comId' => $comId,
+            'facId' => $facId,
+            'comDate' => $comDate,
+            'facDate' => $facDate,
             'commandes' => $commandeRepository->myCommandeByCom($id),
             'totals' => $commandeRepository->totalPrixCom($id)
         ]);
