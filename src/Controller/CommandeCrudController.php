@@ -46,17 +46,26 @@ class CommandeCrudController extends AbstractController
     public function showDetailCommande(Commande $commande, CommandeRepository $commandeRepository, $id): Response
     {
         $comId = $commandeRepository->findOneBy(['com_facture_id' => $id])->getId();
+        $utiId = $commandeRepository->findOneBy(['com_facture_id' => $id])->getComUti()->getId();
         $facId = $commandeRepository->findOneBy(['com_facture_id' => $id])->getComFactureId();
         $comDate = $commandeRepository->findOneBy(['com_facture_id' => $id])->getComDate();
         $facDate = $commandeRepository->findOneBy(['com_facture_id' => $id])->getComDate();
           // $y = $commandeRepository->myCommandeByCom($id);
         //    $y = $commandeRepository->totalPrixCom($id);
-            //dd($comDate);
+          // dd($commandeRepository->myCommandeByCom($id));
         // $t = $commandeRepository->myCommande();
         // dd($t);
         return $this->render('commande_crud/show_my_commande.html.twig', [
             //'commande' => $commande,
             'comId' => $comId,
+            'utiId' => $utiId,
+            'nom' => $commandeRepository->myCommandeByCom($id)[0]['nom'],
+            'prenom' => $commandeRepository->myCommandeByCom($id)[0]['prenom'],
+            'adresse' => $commandeRepository->myCommandeByCom($id)[0]['c_adLiv'],
+            'adresseFac' => $commandeRepository->myCommandeByCom($id)[0]['c_adFac'],
+            'tel' => $commandeRepository->myCommandeByCom($id)[0]['user_tel'],
+            'email' => $commandeRepository->myCommandeByCom($id)[0]['user_email'],
+            'adresse' => $commandeRepository->myCommandeByCom($id)[0]['c_adLiv'],
             'facId' => $facId,
             'comDate' => $comDate,
             'facDate' => $facDate,

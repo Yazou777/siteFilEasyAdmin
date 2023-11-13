@@ -3,7 +3,7 @@
 {% block title %}Commande index{% endblock %}
 
 {% block body %}
-    <h1>Detail de ma commande</h1>
+    {# <h1>Detail de ma commande</h1> #}
     <div class='container'>
         <div class='row'>    
             <img src="/images/logoFacture.jpg" class="logo col-6"> 
@@ -13,25 +13,29 @@
                       <div>Date : {{ facDate ? facDate|date('Y-m-d') : '' }}</div>
                       
                 </div>
-            <div>
-            Client :
+            <div class='border mb-2 py-2'>
+            Client : n°{{ utiId }}, {{ nom }} {{ prenom }},  {{ adresse }} , {{ tel }}, {{ email }}
+            </div>
+            <div class='border py-3'>
+            Adresse de facturation : {{ adresseFac }}
             </div>
         </div>
-    </div>
-    <table class="table">
+    
+    <div class='mt-5'> Description de la commande </div>
+    <table class="table table-bordered">
         <thead>
             <tr>
-                <th>Numero Facture</th>
-                <th>Produit</th>
-                <th>Prix en Euro</th>
+                <th>REF.</th>
+                <th>DESIGNATION</th>
+                <th>P U</th>
                 <th>Quantité</th>
-                <th>SousTotal</th>
-                 <th>Adresse</th>
+                <th>Total</th>
+                 {# <th>Adresse</th>
                 <th>Adresse de facturation</th>
                 <th>Numero client</th>
                 <th>Email</th>
                 <th>Telephone</th>
-                <th>Date commande</th>
+                <th>Date commande</th> #}
                {#  <th>Com_adresse_facturation</th>
                 <th>Com_isPaid</th>
                 <th>Com_moyen_paiement</th>
@@ -43,17 +47,17 @@
         <tbody>
         {% for commande in commandes %}
             <tr>
-             <td>{{ commande.c_facId }}</td>
+             <td>{{ commande.p_id }}</td>
               <td>{{ commande.p_nom }}</td>
                 <td>{{ commande.p_prix }}</td>
                 <td>{{ commande.p_quantite }}</td>
                 <td>{{ commande.p_SousTotal }}</td>
-                <td>{{ commande.c_adLiv }}</td>
+                {# <td>{{ commande.c_adLiv }}</td>
                 <td>{{ commande.c_adFac }}</td>
                 <td>{{ commande.user_id }}</td>
                 <td>{{ commande.user_email }}</td>
                 <td>{{ commande.user_tel }}</td>
-                 <td>{{ commande.c_date ? commande.c_date|date('Y-m-d') : '' }}</td>
+                 <td>{{ commande.c_date ? commande.c_date|date('Y-m-d') : '' }}</td> #}
                   {# <td>{{ commande.c_date ? commande.c_date|date('Y-m-d H:i:s') : '' }}</td> #}
                 {# <td>{{ commande.p_SousTotal }}</td> #}
                 {# <td>{{ commande.comAdresseFacturation }}</td>
@@ -61,10 +65,10 @@
                 <td>{{ commande.comMoyenPaiement }}</td>
                 <td>{{ commande.comStripeSessionId }}</td>
                 <td>{{ commande.comPaypalId }}</td> #}
-                <td>     
+                {# <td>      #}
                 {# <a href="{{ path('app_commande_crud_show', {'id': commande.id}) }}">show</a> #}
                     {# <a href="{{ path('app_commande_crud_edit', {'id': commande.id}) }}">edit</a> #}
-                </td>
+                {# </td> #}
             </tr>
         {% else %}
             <tr>
@@ -72,16 +76,18 @@
             </tr>
         {% endfor %}
            {% for total in totals %}
-           <td>Transporteur : {{ total.p_tra }} </td>
+           <td>Transporteur</td>
+           <td>{{ total.p_tra }} </td>
            <td> {{ total.p_fdp }} </td>
-           <td> 1 </td>
-                            <td> {{ total.p_fdp }} €</td>
+           <td> </td>
+            <td> {{ total.p_fdp }} €</td>
                           {% endfor %}
         </tbody>
           <tfoot>
           {% for total in totals %}
                         <tr>
-                            <td colspan="3">Total</td>
+                         <td colspan="2"></td>
+                            <td colspan="2">Total</td>
                             
                             <td> {{ total.p_total }} €</td>
                         </tr>
@@ -90,4 +96,12 @@
     </table>
 
     {# <a href="{{ path('app_commande_crud_new') }}">Create new</a> #}
+    <p>Solde payable sous « délai de paiement » à réception de facture, par « mode de paiement ».</p>
+    <div>Pénalité de retard au taux annuel de « nombre » % </div>
+<div>En cas de retard de paiement, application d’une indemnité forfaitaire pour frais de recouvrement de 40 euros (article D. 441-5 du code du commerce).</div>
+   <div class='mt-5'> FilRougeCompany </div>
+    <div> SA au capital de  </div>
+    </div>
+
+    
 {% endblock %}
