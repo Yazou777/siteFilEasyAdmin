@@ -27,6 +27,8 @@
                             <th>Prix</th>
                             <th>Quantité</th>
                             <th>Total</th>
+                            <th>TVA</th>
+                            <th>TTC</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -34,14 +36,11 @@
                         {% for element in data %}
                             <tr>
                                 <td>{{ element.produit.ProNom }}</td>
-                                <td>{{ element.produit.ProPrix|number_format(2, '.', ',')}}€</td>
+                                <td>{{ (element.produit.ProPrix)| format_currency('EUR', locale='fr')}}</td>
                                 <td>{{ element.quantite }}</td>
-                                <td>{{ element.quantite * element.produit.ProPrix}} €</td>
-                                <td>
-                                    {# <a href="{{ path('panier_add', {id: element.produit.id}) }}" class="btn btn-success">+</a>
-                                    <a href="{{ path('panier_remove', {id: element.produit.id}) }}" class="btn btn-warning">-</a>
-                                    <a href="{{ path('panier_delete', {id: element.produit.id}) }}" class="btn btn-danger">Supprimer</a> #}
-                                </td>
+                                <td>{{ (element.quantite * element.produit.ProPrix) | format_currency('EUR', locale='fr')}} </td>
+                                <td>{{ ((element.quantite * element.produit.ProPrix) * 0.2 )| format_currency('EUR', locale='fr')}} </td>
+                                <td>{{ ((element.quantite * element.produit.ProPrix) * 0.2 +  element.quantite * element.produit.ProPrix )| format_currency('EUR', locale='fr') }} </td>
                             </tr>
                             {% else %}
                             <tr>
@@ -53,7 +52,9 @@
                         <tr>
                             <td colspan="2">Sous-Total</td>
                             <td>{{totalQte}}</td>
-                            <td>{{ total}} €</td>
+                            <td>{{ total | format_currency('EUR', locale='fr')}} </td>
+                            <td>{{ (total * 0.2) | format_currency('EUR', locale='fr')}}</td>
+                            <td>{{ (total + (total * 0.2)) | format_currency('EUR', locale='fr')}} </td>
                             <td>
                                 <a href="{{ path('panier_empty') }}" class="btn btn-danger">Vider</a>
                             </td>

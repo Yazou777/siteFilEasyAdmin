@@ -29,6 +29,7 @@ class PaymentController extends AbstractController
     public function stripeCheckout($id): RedirectResponse
     {
         $productStripe = [];
+        $totalHT = 0;
         //recupére la commande en cours
       $order = $this->em->getRepository(Commande::class)->findOneBy(['id' => $id]);
      //dd($order);
@@ -52,7 +53,20 @@ class PaymentController extends AbstractController
                 ],
                 'quantity' => $product->getPanQuantite()
             ];
+
+            $totalHT += $product->getPanPrixUnite() *  $product->getPanQuantite();
      }
+
+     $producStripe[] = [
+        'price_data' => [
+            'currency' => 'eur',
+            'unit_amount' => (round(($totalHT * 0.2),2)) * 100,
+            'product_data' => [
+                'name' => "TVA"
+            ]
+            ],
+            'quantity' => 1,
+        ];
 
      $transporteurData = $this->em->getRepository(Transporteur::class)->findOneBy(['id' => $order->getComTransporteur()]);
 //dd($transporteurData);

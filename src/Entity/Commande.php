@@ -58,6 +58,15 @@ class Commande
     #[ORM\Column(nullable: true)]
     private ?int $com_facture_id = null;
 
+    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2, nullable: true)]
+    private ?string $com_facture_total_ht = null;
+
+    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2, nullable: true)]
+    private ?string $com_facture_tva = null;
+
+    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2, nullable: true)]
+    private ?string $com_facture_total_ttc = null;
+
     public function __construct()
     {
         $this->com_date = new \DateTimeImmutable();
@@ -266,6 +275,42 @@ class Commande
     public function setComFactureId(?int $com_facture_id): static
     {
         $this->com_facture_id = $com_facture_id;
+
+        return $this;
+    }
+
+    public function getComFactureTotalHt(): ?string
+    {
+        return $this->com_facture_total_ht;
+    }
+
+    public function setComFactureTotalHt(?string $com_facture_total_ht): static
+    {
+        $this->com_facture_total_ht = $com_facture_total_ht;
+
+        return $this;
+    }
+
+    public function getComFactureTva(): ?string
+    {
+        return $this->com_facture_tva;
+    }
+
+    public function setComFactureTva(?string $com_facture_tva): static
+    {
+        $this->com_facture_tva = $com_facture_tva;
+
+        return $this;
+    }
+
+    public function getComFactureTotalTtc(): ?string
+    {
+        return $this->com_facture_total_ttc;
+    }
+
+    public function setComFactureTotalTtc(?string $com_facture_total_ttc): static
+    {
+        $this->com_facture_total_ttc = $com_facture_total_ttc;
 
         return $this;
     }

@@ -38,7 +38,9 @@
                             <th>Produit</th>
                             <th>Prix</th>
                             <th>Quantité</th>
-                            <th>Total</th>
+                            <th>Total HT</th>
+                            <th>TVA</th>
+                            <th>TTC</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -47,7 +49,9 @@
                                 <td>{{ element.produit.ProNom }}</td>
                                 <td>{{ element.produit.ProPrix|number_format(2, '.', ',')}}€</td>
                                 <td>{{ element.quantite }}</td>
-                                <td>{{ element.quantite * element.produit.ProPrix}} €</td>
+                                <td>{{ (element.quantite * element.produit.ProPrix) | format_currency('EUR', locale='fr')}}</td>
+                                <td>{{ ((element.quantite * element.produit.ProPrix) * 0.2 )| format_currency('EUR', locale='fr')}} </td>
+                                <td>{{ ((element.quantite * element.produit.ProPrix) * 0.2 +  element.quantite * element.produit.ProPrix )| format_currency('EUR', locale='fr') }} </td>
                             </tr>
                             {% else %}
                             <tr>
@@ -59,15 +63,21 @@
                         <tr>
                             <td colspan="2">Sous-Total</td>
                             <td>{{totalQte}}</td>
-                            <td>{{ sousTotal}} €</td>
+                            <td>{{ sousTotal | format_currency('EUR', locale='fr')}} </td>
+                            <td>{{ (sousTotal * 0.2)| format_currency('EUR', locale='fr') }} </td>
+                            <td>{{ (sousTotal + (sousTotal * 0.2))| format_currency('EUR', locale='fr') }} </td>
                         </tr>
                         <tr>
                             <td colspan="3">Frais de port</td>
-                            <td>{{ fdp}} €</td>
+                            <td>{{ fdp | format_currency('EUR', locale='fr')}} </td>
+                            <td>{{ 0 | format_currency('EUR', locale='fr') }}  </td>
+                            <td>{{ fdp | format_currency('EUR', locale='fr')}} </td>
                         </tr>
                         <tr>
                             <td colspan="3">Total</td>
-                            <td>{{total}} €</td>
+                            <td>{{total | format_currency('EUR', locale='fr')}} </td>
+                             <td>{{ (sousTotal * 0.2)| format_currency('EUR', locale='fr') }} </td>
+                              <td>{{ (total + (sousTotal * 0.2))| format_currency('EUR', locale='fr') }} </td>
                         </tr>
                     </tfoot>
                 </table>
@@ -78,7 +88,7 @@
     <form method="POST" action="{{ path('payment_stripe', {id: id}) }}">
         <button class="btn btn-lg btn-primary" type="submit"
         style="border-radius: 6px; position: relative; top:20px;">Payer par stripe
-        | {{total}} €
+        | {{(total + (sousTotal * 0.2))| format_currency('EUR', locale='fr')}} 
         </button>
     </form>
 {% else %}
@@ -86,7 +96,7 @@
     <form method="POST" action="#">
         <button class="btn btn-lg btn-primary" type="submit"
         style="border-radius: 6px; position: relative; top:20px;">Payer par paypal
-        | {{total}} €
+        | {{(total + (sousTotal * 0.2))| format_currency('EUR', locale='fr')}} 
         </button>
     </form>
 
