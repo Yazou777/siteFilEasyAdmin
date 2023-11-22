@@ -15,9 +15,17 @@ use App\Entity\BonLivraison;
 use App\Entity\Transporteur;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AppFixtures extends Fixture
 {
+
+    private $hasher;
+
+    public function __construct(UserPasswordHasherInterface $hasher){
+        $this->hasher = $hasher;
+    }
+
     public function load(ObjectManager $manager): void
     {
         // $product = new Product();
@@ -670,7 +678,8 @@ class AppFixtures extends Fixture
         $commercial1 = new Utilisateur();
         $commercial1->setemail("commercial1@gmail.com");
         $commercial1->setRoles([]);
-        $commercial1->setPassword('123456');
+        $password = $this->hasher->hashPassword($commercial1, "123456");
+        $commercial1->setPassword($password);
         $commercial1->setUtiRue('5 rue du commerce');
         $commercial1->setUtiVille('Market City');
         $commercial1->setUtiNom('Vendeur');
@@ -706,7 +715,8 @@ class AppFixtures extends Fixture
         $client1 = new Utilisateur();
         $client1->setemail("client1@gmail.com");
         $client1->setRoles([]);
-        $client1->setPassword('123456');
+        $password = $this->hasher->hashPassword($client1, "123456");
+        $client1->setPassword($password);
         $client1->setUtiRue('5 rue de jachete');
         $client1->setUtiVille('Market City');
         $client1->setUtiNom('Client1');
@@ -743,7 +753,8 @@ class AppFixtures extends Fixture
         $client2 = new Utilisateur();
         $client2->setemail("client2@gmail.com");
         $client2->setRoles([]);
-        $client2->setPassword('123456');
+        $password = $this->hasher->hashPassword($client2, "123456");
+        $client2->setPassword($password);
         $client2->setUtiRue('5 rue de jachete');
         $client2->setUtiVille('Sold City');
         $client2->setUtiNom('Client2');
