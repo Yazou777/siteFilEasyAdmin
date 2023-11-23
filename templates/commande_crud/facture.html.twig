@@ -31,6 +31,7 @@
                 <th>Quantité</th>
                 <th>Total HT</th>
                 <th>TVA</th>
+                <th>Total TTC</th>
                  {# <th>Adresse</th>
                 <th>Adresse de facturation</th>
                 <th>Numero client</th>
@@ -50,10 +51,11 @@
             <tr>
              <td>{{ commande.p_id }}</td>
               <td>{{ commande.p_nom }}</td>
-                <td>{{ commande.p_prix }}</td>
+                <td>{{ commande.p_prix| format_currency('EUR', locale='fr') }}</td>
                 <td>{{ commande.p_quantite }}</td>
-                <td>{{ commande.p_SousTotal }}</td>
-                <td>{{ commande.p_SousTotal * 0.2}}</td>
+                <td>{{ commande.p_SousTotal| format_currency('EUR', locale='fr') }}</td>
+                <td>{{ (commande.p_SousTotal * 0.2)| format_currency('EUR', locale='fr')}}</td>
+                <td>{{(commande.p_SousTotal + (commande.p_SousTotal * 0.2))| format_currency('EUR', locale='fr')}}</td>
                 {# <td>{{ commande.c_adLiv }}</td>
                 <td>{{ commande.c_adFac }}</td>
                 <td>{{ commande.user_id }}</td>
@@ -80,9 +82,10 @@
            {% for total in totals %}
            <td>Transporteur</td>
            <td>{{ total.p_tra }} </td>
-           <td> {{ total.p_fdp }} </td>
+           <td> {{ total.p_fdp | format_currency('EUR', locale='fr') }} </td>
            <td> </td>
-            <td> {{ total.p_fdp }} €</td>
+            <td> {{ total.p_fdp | format_currency('EUR', locale='fr')}} </td>
+             <td colspan="2"></td>
                           {% endfor %}
         </tbody>
           <tfoot>
@@ -91,8 +94,9 @@
                          <td colspan="2"></td>
                             <td colspan="2">Total</td>
                             
-                            <td> {{ total.p_total }} €</td>
-                            <td> {{ total.p_total }} €</td>
+                            <td> {{ total.p_total | format_currency('EUR', locale='fr')}} </td>
+                            <td> {{ ((total.p_total - total.p_fdp)  * 0.2) | format_currency('EUR', locale='fr') }} </td>
+                            <td> {{ (((total.p_total - total.p_fdp)  * 0.2) + (total.p_total))| format_currency('EUR', locale='fr') }} </td>
                         </tr>
                           {% endfor %}
           </tfoot>
