@@ -52,7 +52,9 @@ public function myCommandeByCom($id): array
     // automatically knows to select Products
     // the "p" is an alias you'll use in the rest of the query
     $qb = $this->createQueryBuilder('c')
-        ->select('Distinct c.id as c_id, u.id as user_id, u.email as user_email, u.uti_telephone as user_tel, produit.id as p_id, produit.pro_nom as p_nom, panier.pan_prix_unite as p_prix, panier.pan_quantite as p_quantite, panier.pan_prix_unite * panier.pan_quantite as p_SousTotal, c.com_adresse_facturation as c_adFac, c.com_adresse_livraison as c_adLiv, c.com_date as c_date, c.com_facture_id as c_facId, ad.adr_nom as nom,  ad.adr_prenom as prenom' )
+        //->select('Distinct c.id as c_id, u.id as user_id, u.email as user_email, u.uti_telephone as user_tel, produit.id as p_id, produit.pro_nom as p_nom, panier.pan_prix_unite as p_prix, panier.pan_quantite as p_quantite, panier.pan_prix_unite * panier.pan_quantite as p_SousTotal, c.com_adresse_facturation as c_adFac, c.com_adresse_livraison as c_adLiv, c.com_date as c_date, c.com_facture_id as c_facId, ad.adr_nom as nom,  ad.adr_prenom as prenom' )
+        ->select('Distinct c.id as c_id, u.id as user_id, u.email as user_email, u.uti_telephone as user_tel, produit.id as p_id, produit.pro_nom as p_nom, panier.pan_prix_unite as p_prix, panier.pan_quantite as p_quantite, panier.pan_prix_unite * panier.pan_quantite as p_SousTotal, c.com_adresse_facturation as c_adFac, c.com_adresse_livraison as c_adLiv, c.com_date as c_date, c.com_facture_id as c_facId' )
+
         ->join('c.com_uti', 'u')
         ->join('u.adresses', 'ad')
         ->join('c.paniers', 'panier')

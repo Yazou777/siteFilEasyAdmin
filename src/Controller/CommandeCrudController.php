@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Panier;
 use App\Entity\Commande;
 use App\Form\Commande1Type;
+use App\Repository\AdresseRepository;
 use App\Repository\PanierRepository;
 use App\Repository\CommandeRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -43,7 +44,7 @@ class CommandeCrudController extends AbstractController
     }
 
     #[Route('/mesCommande/{id}', name: 'app_my_commande_crud_show', methods: ['GET'])]
-    public function showDetailCommande(Commande $commande, CommandeRepository $commandeRepository, $id): Response
+    public function showDetailCommande(Commande $commande, CommandeRepository $commandeRepository, AdresseRepository $adresseRepository, $id): Response
     {
         $comId = $commandeRepository->findOneBy(['com_facture_id' => $id])->getId();
         $utiId = $commandeRepository->findOneBy(['com_facture_id' => $id])->getComUti()->getId();
@@ -54,13 +55,15 @@ class CommandeCrudController extends AbstractController
         //    $y = $commandeRepository->totalPrixCom($id);
           // dd($commandeRepository->myCommandeByCom($id));
         // $t = $commandeRepository->myCommande();
-        // dd($t);
-        return $this->render('commande_crud/show_my_commande.html.twig', [
+        //$x = $adresseRepository->findBy(['adr_uti' => $utiId]);
+        //dd($adresseRepository->findBy(['adr_uti' => $utiId]));
+        // dd($commandeRepository->myCommandeByCom($id)[0]['c_adLiv']);
+        return $this->render('commande_crud/facture.html.twig', [
             //'commande' => $commande,
             'comId' => $comId,
             'utiId' => $utiId,
-            'nom' => $commandeRepository->myCommandeByCom($id)[0]['nom'],
-            'prenom' => $commandeRepository->myCommandeByCom($id)[0]['prenom'],
+           // 'nom' => $commandeRepository->myCommandeByCom($id)[0]['nom'],
+            //'prenom' => $commandeRepository->myCommandeByCom($id)[0]['prenom'],
             'adresse' => $commandeRepository->myCommandeByCom($id)[0]['c_adLiv'],
             'adresseFac' => $commandeRepository->myCommandeByCom($id)[0]['c_adFac'],
             'tel' => $commandeRepository->myCommandeByCom($id)[0]['user_tel'],

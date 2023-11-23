@@ -6,12 +6,13 @@ use Stripe\Stripe;
 use App\Entity\Produit;
 use App\Entity\Commande;
 use App\Entity\Transporteur;
+use App\Repository\CommandeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class PaymentController extends AbstractController
 {
@@ -120,6 +121,11 @@ $checkout_session = \Stripe\Checkout\Session::create([
         $order = $this->em->getRepository(Commande::class)->findOneBy(['id' => $id]);
         $order->setComIsPaid(true);
         $order->setComFactureId($order->getId());
+        $totalData = $this->em->getRepository(Commande::class)->totalPrixCom($id);
+        $order->setComFactureTotalHt($totalData[0]["p_total"]);
+        $order->setComFactureTva(($totalData[0]["p_total"] - $totalData[0]["p_fdp"]) * 0.2);
+        $order->setComFactureTotalTtc((($totalData[0]["p_total"] - $totalData[0]["p_fdp"]) * 0.2) +$totalData[0]["p_total"]);
+       // dd((($totalData[0]["p_total"] - $totalData[0]["p_fdp"]) * 0.2) +$totalData[0]["p_total"]);
         $em->persist($order);
         $em->flush();
         //return $this->render('order/succes.html.twig');

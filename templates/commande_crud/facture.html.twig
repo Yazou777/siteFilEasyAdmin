@@ -14,7 +14,7 @@
                       
                 </div>
             <div class='border mb-2 py-2'>
-            Client : n°{{ utiId }}, {{ nom }} {{ prenom }},  {{ adresse }} , {{ tel }}, {{ email }}
+            Client : n°{{ utiId }}, {{ adresse }} , {{ tel }}, {{ email }}
             </div>
             <div class='border py-3'>
             Adresse de facturation : {{ adresseFac }}
@@ -29,7 +29,8 @@
                 <th>DESIGNATION</th>
                 <th>P U</th>
                 <th>Quantité</th>
-                <th>Total</th>
+                <th>Total HT</th>
+                <th>TVA</th>
                  {# <th>Adresse</th>
                 <th>Adresse de facturation</th>
                 <th>Numero client</th>
@@ -52,6 +53,7 @@
                 <td>{{ commande.p_prix }}</td>
                 <td>{{ commande.p_quantite }}</td>
                 <td>{{ commande.p_SousTotal }}</td>
+                <td>{{ commande.p_SousTotal * 0.2}}</td>
                 {# <td>{{ commande.c_adLiv }}</td>
                 <td>{{ commande.c_adFac }}</td>
                 <td>{{ commande.user_id }}</td>
@@ -89,6 +91,7 @@
                          <td colspan="2"></td>
                             <td colspan="2">Total</td>
                             
+                            <td> {{ total.p_total }} €</td>
                             <td> {{ total.p_total }} €</td>
                         </tr>
                           {% endfor %}
