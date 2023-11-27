@@ -3,12 +3,14 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Metadata\ApiResource;
 use App\Repository\CategorieRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 
 
 #[ORM\Entity(repositoryClass: CategorieRepository::class)]
+#[ApiResource]
 class Categorie
 {
     #[ORM\Id]
